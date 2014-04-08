@@ -1,4 +1,4 @@
-KeyValueStoreBundle
+SalesforceBundle
 ===================
 
 [![Latest Stable Version]https://poser.pugx.org/elcweb/salesforce-bundle/v/stable.png)](https://packagist.org/packages/elcweb/salesforce-bundle)

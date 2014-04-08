@@ -11,8 +11,11 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "symfony/framework-bundle": ">=2.1,<3.0-dev",
-        "leaseweb/memcache-bundle": "*"
+        "symfony/framework-bundle"  : ">=2.1,<3.0-dev",
+        "phpforce/common"           : "dev-master",
+        "elcweb/soap-client"        : "dev-master",
+        "phpforce/salesforce-bundle": "dev-master",
+        "leaseweb/memcache-bundle"  : "*"
     },
     "autoload": {
         "psr-0": { "Elcweb\\SalesforceBundle": "" }
