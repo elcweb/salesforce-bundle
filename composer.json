@@ -1,0 +1,22 @@
+{
+    "name": "elcweb/salesforce-bundle",
+    "type": "symfony-bundle",
+    "description": "Allows you to easily access salesforce objects",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Etienne Lachance",
+            "email": "el@elcweb.ca"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/framework-bundle": ">=2.1,<3.0-dev",
+        "leaseweb/memcache-bundle": "*"
+    },
+    "autoload": {
+        "psr-0": { "Elcweb\\SalesforceBundle": "" }
+    },
+    "minimum-stability": "dev",
+    "target-dir": "Elcweb/SalesforceBundle"
+}
