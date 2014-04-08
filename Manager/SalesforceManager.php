@@ -7,7 +7,6 @@ use Lsw\MemcacheBundle\Cache\AntiDogPileMemcache as Memcache;
 
 class SalesforceManager
 {
-    protected $prefix;
     protected $soapClient;
     protected $memcached;
     protected $memcached_ttl;
@@ -21,19 +20,19 @@ class SalesforceManager
 
     public function get($sObjectType, $id, $refresh = false)
     {
-        $fields      = false;
-        $object      = false;
+        $fields = false;
+        $object = false;
 
         if (!$refresh) {
-            $object = $this->memcached->get($this->prefix.'salesforce.object.'.$id);
+            $object = $this->memcached->get('salesforce.object.'.$id);
         }
 
         if (!$object) {
             // Get fields from memcache
             if (!$refresh) {
-                $fields = $this->memcached->get($this->prefix.'salesforce.objectFields.'.$sObjectType);
+                $fields = $this->memcached->get('salesforce.objectFields.'.$sObjectType);
             }
-            
+
             // If no data, ask Salesforce and save to memcached.
             if (!$fields) {
                 $obj = $this->soapClient->call('describeSObject', array('sObjectType' => $sObjectType));
@@ -43,7 +42,7 @@ class SalesforceManager
                     $fields[] = $field->getName();
                 }
 
-                $fields = $this->memcached->set($this->prefix.'salesforce.objectFields.'.$sObjectType, $fields, $this->memcached_ttl);
+                $this->memcached->set('salesforce.objectFields.'.$sObjectType, $fields, $this->memcached_ttl);
             }
 
             // TODO: Log Salesforce Query and Result
@@ -51,7 +50,7 @@ class SalesforceManager
             $object = $object[0];
             
             // Set Memcached
-            $this->memcached->set($this->prefix.'salesforce.object.'.$id, $object, $this->memcached_ttl);
+            $this->memcached->set('salesforce.object.'.$id, $object, $this->memcached_ttl);
         }
 
         return $object;
