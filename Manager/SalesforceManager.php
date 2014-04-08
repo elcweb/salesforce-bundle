@@ -12,7 +12,6 @@ class SalesforceManager
     protected $memcached;
     protected $memcached_ttl;
 
-
     public function __construct(Client $soapClient, Memcache $memcached, $memcached_ttl)
     {
         $this->soapClient    = $soapClient;
@@ -31,8 +30,10 @@ class SalesforceManager
 
         if (!$object) {
             // Get fields from memcache
-            $fields = $this->memcached->get($this->prefix.'salesforce.objectFields.'.$sObjectType);
-
+            if (!$refresh) {
+                $fields = $this->memcached->get($this->prefix.'salesforce.objectFields.'.$sObjectType);
+            }
+            
             // If no data, ask Salesforce and save to memcached.
             if (!$fields) {
                 $obj = $this->soapClient->call('describeSObject', array('sObjectType' => $sObjectType));
