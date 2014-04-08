@@ -35,7 +35,7 @@ class SalesforceManager
 
             // If no data, ask Salesforce and save to memcached.
             if (!$fields) {
-                $obj = $this->sf->call('describeSObject', array('sObjectType' => $sObjectType));
+                $obj = $this->soapClient->call('describeSObject', array('sObjectType' => $sObjectType));
 
                 $fields = array();
                 foreach ($obj->getFields() as $field) {
@@ -46,7 +46,7 @@ class SalesforceManager
             }
 
             // TODO: Log Salesforce Query and Result
-            $object = $this->sf->retrieve($fields, array($id), $sObjectType);
+            $object = $this->soapClient->retrieve($fields, array($id), $sObjectType);
             $object = $object[0];
             
             // Set Memcached
