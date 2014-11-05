@@ -40,6 +40,13 @@ public function registerBundles()
 }
 ```
 
+Configuration reference
+-----------------------
+```
+elcweb_salesforce:
+    ttl: 14400 # ttl in secondes
+```
+
 License
 -------
 

@@ -12,7 +12,7 @@
         <service id="elcweb.salesforce.manager" class="%elcweb.salesforce.manager.class%">
             <argument type="service" id="phpforce.soap_client" />
             <argument type="service" id="memcache.default" />
-            <argument>900</argument>
+            <argument>%elcweb_salesforce.ttl%</argument>
         </service>
     </services>
 </container>
