@@ -2,7 +2,7 @@
 
 namespace Elcweb\SalesforceBundle\Manager;
 
-use Phpforce\SoapClient\Client;
+use Phpforce\SoapClient\ClientFactory;
 use Lsw\MemcacheBundle\Cache\AntiDogPileMemcache as Memcache;
 
 class SalesforceManager
@@ -11,9 +11,9 @@ class SalesforceManager
     protected $memcached;
     protected $memcached_ttl;
 
-    public function __construct(Client $soapClient, Memcache $memcached, $memcached_ttl)
+    public function __construct(ClientFactory $soapFactory, Memcache $memcached, $memcached_ttl)
     {
-        $this->soapClient    = $soapClient;
+        $this->soapClient    = $soapFactory->getInstance();
         $this->memcached     = $memcached;
         $this->memcached_ttl = $memcached_ttl;
     }
@@ -33,24 +33,28 @@ class SalesforceManager
                 $fields = $this->memcached->get('salesforce.objectFields.'.$sObjectType);
             }
 
-            // If no data, ask Salesforce and save to memcached.
-            if (!$fields) {
-                $obj = $this->soapClient->call('describeSObject', array('sObjectType' => $sObjectType));
+            try {
+                // If no data, ask Salesforce and save to memcached.
+                if (!$fields) {
+                    $obj = $this->soapClient->call('describeSObject', array('sObjectType' => $sObjectType));
 
-                $fields = array();
-                foreach ($obj->getFields() as $field) {
-                    $fields[] = $field->getName();
+                    $fields = array();
+                    foreach ($obj->getFields() as $field) {
+                        $fields[] = $field->getName();
+                    }
+
+                    $this->memcached->set('salesforce.objectFields.'.$sObjectType, $fields, $this->memcached_ttl);
                 }
 
-                $this->memcached->set('salesforce.objectFields.'.$sObjectType, $fields, $this->memcached_ttl);
+                // TODO: Log Salesforce Query and Result
+                $object = $this->soapClient->retrieve($fields, array($id), $sObjectType);
+                $object = $object[0];
+                
+                // Set Memcached
+                $this->memcached->set('salesforce.object.'.$id, $object, $this->memcached_ttl);
+            } catch (\Exception $e) {
+                
             }
-
-            // TODO: Log Salesforce Query and Result
-            $object = $this->soapClient->retrieve($fields, array($id), $sObjectType);
-            $object = $object[0];
-            
-            // Set Memcached
-            $this->memcached->set('salesforce.object.'.$id, $object, $this->memcached_ttl);
         }
 
         return $object;

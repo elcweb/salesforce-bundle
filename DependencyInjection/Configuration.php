@@ -21,6 +21,10 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->scalarNode('wsdl')->end()
+                ->scalarNode('username')->end()
+                ->scalarNode('password')->end()
+                ->scalarNode('token')->end()
                 ->scalarNode('ttl')->defaultValue(14400)->end()
             ->end();
 

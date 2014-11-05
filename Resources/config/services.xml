@@ -9,10 +9,27 @@
     </parameters>
 
     <services>
+        <service id="elcweb.salesforce.soap.wsdl" class="Phpforce\SoapClient\Soap\WSDL\Wsdl">
+            <argument>%elcweb.salesforce.soap.config.wsdl%</argument>
+        </service>
+
+        <service id="elcweb.salesforce.soap.factory" class="Phpforce\SoapClient\ClientFactory">
+            <argument type="service" id="elcweb.salesforce.soap.wsdl" />
+            <argument>%elcweb.salesforce.soap.config.username%</argument>
+            <argument>%elcweb.salesforce.soap.config.password%</argument>
+            <argument>%elcweb.salesforce.soap.config.token%</argument>
+            <call method="withLog">
+                <argument type="service" id="logger" />
+            </call>
+<!--            <call method="withCache">
+                <argument type="service" id="???" />
+            </call>-->
+        </service>
+
         <service id="elcweb.salesforce.manager" class="%elcweb.salesforce.manager.class%">
-            <argument type="service" id="phpforce.soap_client" />
+            <argument type="service" id="elcweb.salesforce.soap.factory" />
             <argument type="service" id="memcache.default" />
-            <argument>%elcweb_salesforce.ttl%</argument>
+            <argument>%elcweb.salesforce.soap.config.ttl%</argument>
         </service>
     </services>
 </container>
