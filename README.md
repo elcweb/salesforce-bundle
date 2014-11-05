@@ -1,7 +1,7 @@
 SalesforceBundle
 ===================
 
-[![Latest Stable Version]https://poser.pugx.org/elcweb/salesforce-bundle/v/stable.png)](https://packagist.org/packages/elcweb/salesforce-bundle)
+[![Latest Stable Version](https://poser.pugx.org/elcweb/salesforce-bundle/v/stable.png)](https://packagist.org/packages/elcweb/salesforce-bundle)
 [![Total Downloads](https://poser.pugx.org/elcweb/salesforce-bundle/downloads.png)](https://packagist.org/packages/elcweb/salesforce-bundle)
 
 Installation
@@ -9,7 +9,7 @@ Installation
 
 ### Step 1: Download using composer
 
-```js
+``` js
 {
     "require": {
         "elcweb/salesforce-bundle": "dev-master"
