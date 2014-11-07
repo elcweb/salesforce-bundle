@@ -44,7 +44,11 @@ Configuration reference
 -----------------------
 ```
 elcweb_salesforce:
-    ttl: 14400 # ttl in secondes
+    wsdl:     %salesforce_soap_wsdl%
+    username: %salesforce_soap_username%
+    password: %salesforce_soap_password%
+    token:    %salesforce_soap_token%
+    ttl:      14400 # ttl in secondes
 ```
 
 License
