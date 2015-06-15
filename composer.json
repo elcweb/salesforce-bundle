@@ -13,8 +13,10 @@
         "php": ">=5.3.3",
         "symfony/framework-bundle"  : ">=2.1,<3.0-dev",
         "phpforce/common"           : "dev-master",
-        "elcweb/soap-client"        : "dev-master",
         "leaseweb/memcache-bundle"  : "*"
+    },
+    "suggest": {
+        "elcweb/soap-client": "dev-master"
     },
     "autoload": {
         "psr-0": { "Elcweb\\SalesforceBundle": "" }
