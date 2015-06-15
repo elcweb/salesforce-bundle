@@ -1,0 +1,17 @@
+services:
+    elcweb.salesforce.soap.factory:
+        class: Elcweb\SalesforceBundle\SoapClient\ClientBuilder
+        arguments:
+            - "%salesforce_soap_wsdl%"
+            - "%elcweb.salesforce.soap.config.username%"
+            - "%elcweb.salesforce.soap.config.password%"
+            - "%elcweb.salesforce.soap.config.token%"
+        calls:
+            - [withLog, ["@logger"]]
+
+    elcweb.salesforce.manager:
+        class: Elcweb\SalesforceBundle\Manager\SalesforceManager
+        arguments:
+            - "@elcweb.salesforce.soap.factory"
+            - "@memcache.default"
+            - "%elcweb.salesforce.soap.config.ttl%"

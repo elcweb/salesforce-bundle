@@ -2,7 +2,7 @@
 
 namespace Elcweb\SalesforceBundle\Manager;
 
-use Phpforce\SoapClient\ClientFactory;
+use Phpforce\SoapClient\ClientBuilder;
 use Lsw\MemcacheBundle\Cache\AntiDogPileMemcache as Memcache;
 
 class SalesforceManager
@@ -11,9 +11,9 @@ class SalesforceManager
     protected $memcached;
     protected $memcached_ttl;
 
-    public function __construct(ClientFactory $soapFactory, Memcache $memcached, $memcached_ttl)
+    public function __construct(ClientBuilder $soapFactory, Memcache $memcached, $memcached_ttl)
     {
-        $this->soapClient    = $soapFactory->getInstance();
+        $this->soapClient    = $soapFactory->build();
         $this->memcached     = $memcached;
         $this->memcached_ttl = $memcached_ttl;
     }
@@ -36,6 +36,10 @@ class SalesforceManager
             try {
                 // If no data, ask Salesforce and save to memcached.
                 if (!$fields) {
+//                    dump($this->soapClient);
+//                    dump($sObjectType);
+//                    dump($id);
+//                    dump($refresh);
                     $obj = $this->soapClient->call('describeSObject', array('sObjectType' => $sObjectType));
 
                     $fields = array();
