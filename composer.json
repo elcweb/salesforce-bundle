@@ -16,6 +16,9 @@
         "phpforce/soap-client"      : "0.1.0",
         "leaseweb/memcache-bundle"  : "*"
     },
+    "suggest": {
+        "elcweb/keyvaluestore-bundle": "Needed to manage configuration via the database"
+    },
     "autoload": {
         "psr-0": { "Elcweb\\SalesforceBundle": "" }
     },

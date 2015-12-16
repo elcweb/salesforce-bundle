@@ -1,0 +1,5 @@
+services:
+    elcweb.salesforce.config.keyvaluestore:
+        class: Elcweb\SalesforceBundle\Config\KeyValueStoreConfig
+        arguments:
+            - "@elcweb.keyvaluestore"

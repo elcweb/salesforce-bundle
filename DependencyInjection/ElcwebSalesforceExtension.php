@@ -25,10 +25,17 @@ class ElcwebSalesforceExtension extends Extension
             $container->setParameter($prefix.$elem, $config[$elem]);
         }
 
+        $container->setAlias('elcweb.salesforce.config', 'elcweb.salesforce.config.parameter');
+
         $loader = new Loader\YamlFileLoader(
-            $container, 
+            $container,
             new FileLocator(__DIR__.'/../Resources/config')
         );
         $loader->load('services.yml');
+
+        if ($config['keyvaluestore']) {
+            $loader->load('keyvaluestore.yml');
+            $container->setAlias('elcweb.salesforce.config', 'elcweb.salesforce.config.keyvaluestore');
+        }
     }
 }

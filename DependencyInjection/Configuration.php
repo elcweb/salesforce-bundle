@@ -21,11 +21,11 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-//                ->scalarNode('config_provider')->default
-                ->scalarNode('wsdl')->end()
-                ->scalarNode('username')->end()
-                ->scalarNode('password')->end()
-                ->scalarNode('token')->end()
+                ->booleanNode('keyvaluestore')->defaultFalse()->end()
+                ->scalarNode('wsdl')->defaultValue('')->end()
+                ->scalarNode('username')->defaultValue('')->end()
+                ->scalarNode('password')->defaultValue('')->end()
+                ->scalarNode('token')->defaultValue('')->end()
                 ->scalarNode('ttl')->defaultValue(14400)->end()
             ->end();
 

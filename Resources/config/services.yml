@@ -7,15 +7,10 @@ services:
             - "%elcweb.salesforce.soap.config.password%"
             - "%elcweb.salesforce.soap.config.token%"
 
-#    elcweb.salesforce.config.keyvaluestore:
-#        class: Elcweb\SalesforceBundle\Config\KeyValueStoreConfig
-#        arguments:
-#            - "@elcweb.keyvaluestore"
-
     elcweb.salesforce.soap.factory:
         class: Elcweb\SalesforceBundle\Factory\SoapClientFactory
         arguments:
-            - "@elcweb.salesforce.config.parameter"
+            - "@elcweb.salesforce.config"
 
     elcweb.salesforce.soap.clientbuilder:
         class: Elcweb\SalesforceBundle\SoapClient\ClientBuilder
