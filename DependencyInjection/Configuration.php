@@ -21,6 +21,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+//                ->scalarNode('config_provider')->default
                 ->scalarNode('wsdl')->end()
                 ->scalarNode('username')->end()
                 ->scalarNode('password')->end()

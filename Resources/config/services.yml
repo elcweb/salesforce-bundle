@@ -1,17 +1,32 @@
 services:
-    elcweb.salesforce.soap.factory:
-        class: Elcweb\SalesforceBundle\SoapClient\ClientBuilder
+    elcweb.salesforce.config.parameter:
+        class: Elcweb\SalesforceBundle\Config\ParameterConfig
         arguments:
             - "%salesforce_soap_wsdl%"
             - "%elcweb.salesforce.soap.config.username%"
             - "%elcweb.salesforce.soap.config.password%"
             - "%elcweb.salesforce.soap.config.token%"
+
+#    elcweb.salesforce.config.keyvaluestore:
+#        class: Elcweb\SalesforceBundle\Config\KeyValueStoreConfig
+#        arguments:
+#            - "@elcweb.keyvaluestore"
+
+    elcweb.salesforce.soap.factory:
+        class: Elcweb\SalesforceBundle\Factory\SoapClientFactory
+        arguments:
+            - "@elcweb.salesforce.config.parameter"
+
+    elcweb.salesforce.soap.clientbuilder:
+        class: Elcweb\SalesforceBundle\SoapClient\ClientBuilder
+        factory: ["@elcweb.salesforce.soap.factory", create]
         calls:
             - [withLog, ["@logger"]]
+        lazy: true
 
     elcweb.salesforce.manager:
         class: Elcweb\SalesforceBundle\Manager\SalesforceManager
         arguments:
-            - "@elcweb.salesforce.soap.factory"
+            - "@elcweb.salesforce.soap.clientbuilder"
             - "@memcache.default"
             - "%elcweb.salesforce.soap.config.ttl%"
