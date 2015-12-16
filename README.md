@@ -50,6 +50,12 @@ elcweb_salesforce:
     token:    %salesforce_soap_token%
     ttl:      14400 # ttl in secondes
 ```
+Or if you use the KeyValueStoreBundle
+```
+elcweb_salesforce:
+    keyvaluestore: true
+    ttl:      14400 # ttl in secondes
+```
 
 License
 -------
